@@ -17,9 +17,13 @@ class ViewController: UIViewController {
     marchingLayer.borderColor = UIColor.red.cgColor
     marchingLayer.borderWidth = 1
     view.layer.addSublayer(marchingLayer)
-    marchingLayer.animationDirection = .up
+    marchingLayer.animationDirection = .left
     marchingLayer.animationSpeed = 1
+    marchingLayer.preferredSpriteSize = CGSize(width: 30, height: 30)
+    marchingLayer.verticalSpriteSpacing = 5
+    marchingLayer.horizontalSpriteSpacing = 5
     marchingLayer.sprites = [Int](1...15).flatMap({ UIImage(named: "musicSheetSliced\($0)") })
     marchingLayer.startAnimation()
+//    marchingLayer.transform = CATransform3DMakeRotation(CGFloat(-45.0 / 180.0 * M_PI), 0, 0, 1)
   }
 }

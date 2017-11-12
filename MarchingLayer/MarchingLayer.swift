@@ -43,6 +43,9 @@ public class MarchingSpriteLayer: CALayer {
     frame = CGRect(origin: .zero, size: self.size)
     contentsGravity = kCAGravityResizeAspect
     contents = sprite.cgImage
+    // Debug
+    borderColor = UIColor.blue.cgColor
+    borderWidth = 1
   }
 
   public override init(layer: Any) {
@@ -149,11 +152,6 @@ public class MarchingLayer: CALayer {
       currentX += randomSprite.size.width + horizontalSpriteSpacing
       maxY = max(maxY, randomSprite.size.height)
 
-      // End loop if sprites laid out.
-      if currentY > frame.size.height + maxY {
-        break
-      }
-
       // Move to new row.
       if currentX > frame.size.width {
         currentX = 0
@@ -234,7 +232,7 @@ public class MarchingLayer: CALayer {
         randomSprite.frame.origin.y = -randomSprite.size.height
       case .left:
         randomSprite.position.y = marchingSprites[index].position.y
-        randomSprite.frame.origin.x = frame.size.width + randomSprite.size.width
+        randomSprite.frame.origin.x = frame.size.width
       case .right:
         randomSprite.position.y = marchingSprites[index].position.y
         randomSprite.frame.origin.x = -randomSprite.size.width
