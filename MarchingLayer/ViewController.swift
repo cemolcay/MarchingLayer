@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     marchingLayer.borderColor = UIColor.red.cgColor
     marchingLayer.borderWidth = 1
     view.layer.addSublayer(marchingLayer)
-    marchingLayer.animationDirection = .right // down up left
+    marchingLayer.animationDirection = .up
     marchingLayer.animationSpeed = 1
     marchingLayer.sprites = [Int](1...15).flatMap({ UIImage(named: "musicSheetSliced\($0)") })
     marchingLayer.startAnimation()

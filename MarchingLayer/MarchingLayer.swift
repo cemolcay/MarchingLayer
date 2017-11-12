@@ -119,6 +119,11 @@ public class MarchingLayer: CALayer {
     setupSprites()
   }
 
+  deinit {
+    stopAnimation()
+    marchingSprites.forEach({ $0.removeFromSuperlayer() })
+  }
+
   // MARK: Sprites
 
   /// Pops the initial sprites into empty layer.
@@ -144,16 +149,16 @@ public class MarchingLayer: CALayer {
       currentX += randomSprite.size.width + horizontalSpriteSpacing
       maxY = max(maxY, randomSprite.size.height)
 
+      // End loop if sprites laid out.
+      if currentY > frame.size.height + maxY {
+        break
+      }
+
       // Move to new row.
       if currentX > frame.size.width {
         currentX = 0
         currentY += maxY + verticalSpriteSpacing
         maxY = 0
-      }
-
-      // End loop if sprites laid out.
-      if currentY > frame.size.height {
-        break
       }
     }
   }
@@ -204,9 +209,38 @@ public class MarchingLayer: CALayer {
     }
 
     for sprite in removingSprites {
-      guard let index = marchingSprites.index(of: sprite) else { continue }
+      guard let index = marchingSprites.index(of: sprite),
+        let randomImage = randomImage
+        else { continue }
+
       CATransaction.begin()
       CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
+
+      // Spawn new sprite
+      let randomSprite = MarchingSpriteLayer(
+        sprite: randomImage,
+        preferredSize: preferredSpriteSize,
+        tintColor: preferredSpriteTintColor)
+      marchingSprites.append(randomSprite)
+      addSublayer(randomSprite)
+
+      // Layout sprite
+      switch animationDirection {
+      case .up:
+        randomSprite.position.x = marchingSprites[index].position.x
+        randomSprite.frame.origin.y = frame.size.height
+      case .down:
+        randomSprite.position.x = marchingSprites[index].position.x
+        randomSprite.frame.origin.y = -randomSprite.size.height
+      case .left:
+        randomSprite.position.y = marchingSprites[index].position.y
+        randomSprite.frame.origin.x = frame.size.width + randomSprite.size.width
+      case .right:
+        randomSprite.position.y = marchingSprites[index].position.y
+        randomSprite.frame.origin.x = -randomSprite.size.width
+      }
+
+      // Remove sprite
       marchingSprites.remove(at: index).removeFromSuperlayer()
       CATransaction.commit()
     }
