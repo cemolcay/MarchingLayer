@@ -189,16 +189,16 @@ public class MarchingLayer: CALayer {
       switch animationDirection {
       case .up:
         sprite.frame.origin.y -= animationSpeed
-        shouldRemove = sprite.frame.origin.y + sprite.frame.size.height + (sprite.frame.size.height / 2) < 0
+        shouldRemove = sprite.frame.origin.y + (sprite.frame.height / 2) < 0
       case .down:
         sprite.frame.origin.y += animationSpeed
-        shouldRemove = sprite.frame.origin.y - (sprite.frame.size.height / 2) > frame.size.height
+        shouldRemove = sprite.frame.origin.y + (sprite.frame.size.height / 2) > frame.size.height
       case .left:
         sprite.frame.origin.x -= animationSpeed
-        shouldRemove = sprite.frame.origin.x + sprite.frame.size.width + (sprite.frame.size.width / 2)  < 0
+        shouldRemove = sprite.frame.origin.x + sprite.frame.size.width < 0
       case .right:
         sprite.frame.origin.x += animationSpeed
-        shouldRemove = sprite.frame.origin.x - sprite.frame.size.width > frame.size.width
+        shouldRemove = sprite.frame.origin.x > frame.size.width
       }
 
       if shouldRemove {
@@ -226,16 +226,16 @@ public class MarchingLayer: CALayer {
       switch animationDirection {
       case .up:
         randomSprite.position.x = marchingSprites[index].position.x
-        randomSprite.frame.origin.y = frame.size.height
+        randomSprite.frame.origin.y = frame.size.height - verticalSpriteSpacing
       case .down:
         randomSprite.position.x = marchingSprites[index].position.x
-        randomSprite.frame.origin.y = -randomSprite.size.height
+        randomSprite.frame.origin.y = -randomSprite.size.height + verticalSpriteSpacing
       case .left:
         randomSprite.position.y = marchingSprites[index].position.y
-        randomSprite.frame.origin.x = frame.size.width
+        randomSprite.frame.origin.x = frame.size.width + horizontalSpriteSpacing
       case .right:
         randomSprite.position.y = marchingSprites[index].position.y
-        randomSprite.frame.origin.x = -randomSprite.size.width
+        randomSprite.frame.origin.x = -randomSprite.size.width - horizontalSpriteSpacing
       }
 
       // Remove sprite

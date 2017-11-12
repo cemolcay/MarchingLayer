@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     marchingLayer.borderColor = UIColor.red.cgColor
     marchingLayer.borderWidth = 1
     view.layer.addSublayer(marchingLayer)
-    marchingLayer.animationDirection = .left
+    marchingLayer.animationDirection = .up
     marchingLayer.animationSpeed = 1
     marchingLayer.preferredSpriteSize = CGSize(width: 30, height: 30)
     marchingLayer.verticalSpriteSpacing = 5
