@@ -43,9 +43,6 @@ public class MarchingSpriteLayer: CALayer {
     frame = CGRect(origin: .zero, size: self.size)
     contentsGravity = kCAGravityResizeAspect
     contents = sprite.cgImage
-    // Debug
-    borderColor = UIColor.blue.cgColor
-    borderWidth = 1
   }
 
   public override init(layer: Any) {

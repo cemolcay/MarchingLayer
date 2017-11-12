@@ -13,9 +13,7 @@ class ViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    marchingLayer.frame = view.frame.insetBy(dx: 100, dy: 150)//.offsetBy(dx: 20, dy: 20)
-    marchingLayer.borderColor = UIColor.red.cgColor
-    marchingLayer.borderWidth = 1
+    marchingLayer.frame = view.frame
     view.layer.addSublayer(marchingLayer)
     marchingLayer.animationDirection = .up
     marchingLayer.animationSpeed = 1
@@ -24,6 +22,5 @@ class ViewController: UIViewController {
     marchingLayer.horizontalSpriteSpacing = 5
     marchingLayer.sprites = [Int](1...15).flatMap({ UIImage(named: "musicSheetSliced\($0)") })
     marchingLayer.startAnimation()
-//    marchingLayer.transform = CATransform3DMakeRotation(CGFloat(-45.0 / 180.0 * M_PI), 0, 0, 1)
   }
 }
