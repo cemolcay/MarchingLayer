@@ -9,17 +9,14 @@
 import UIKit
 
 class ViewController: UIViewController {
+  let marchingLayer = MarchingLayer()
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view, typically from a nib.
+    marchingLayer.frame = view.frame//.offsetBy(dx: 20, dy: 20)
+//    marchingLayer.borderColor = UIColor.red.cgColor
+//    marchingLayer.borderWidth = 1
+    view.layer.addSublayer(marchingLayer)
+    marchingLayer.sprites = [Int](1...15).flatMap({ UIImage(named: "musicSheetSliced\($0)") })
   }
-
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
-  }
-
-
 }
-
