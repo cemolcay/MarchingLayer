@@ -60,6 +60,7 @@ public class MarchingSpriteLayer: CALayer {
     // Setup sprite
     frame = CGRect(origin: .zero, size: self.size)
     contentsGravity = kCAGravityResizeAspect
+    contentsScale = UIScreen.main.scale
     contents = sprite.cgImage
   }
 
@@ -239,16 +240,16 @@ public class MarchingLayer: CALayer {
       switch animationDirection {
       case .up:
         randomSprite.position.x = marchingSprites[index].position.x
-        randomSprite.frame.origin.y = frame.size.height - verticalSpriteSpacing
+        randomSprite.frame.origin.y = -verticalSpriteSpacing
       case .down:
         randomSprite.position.x = marchingSprites[index].position.x
-        randomSprite.frame.origin.y = -randomSprite.size.height + verticalSpriteSpacing
+        randomSprite.frame.origin.y = verticalSpriteSpacing
       case .left:
         randomSprite.position.y = marchingSprites[index].position.y
-        randomSprite.frame.origin.x = frame.size.width + horizontalSpriteSpacing
+        randomSprite.frame.origin.x = horizontalSpriteSpacing
       case .right:
         randomSprite.position.y = marchingSprites[index].position.y
-        randomSprite.frame.origin.x = -randomSprite.size.width - horizontalSpriteSpacing
+        randomSprite.frame.origin.x = -horizontalSpriteSpacing
       }
 
       // Remove sprite

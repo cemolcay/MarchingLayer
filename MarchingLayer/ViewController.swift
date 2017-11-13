@@ -9,19 +9,20 @@
 import UIKit
 
 class ViewController: UIViewController {
+  @IBOutlet weak var marchingLayerReferanceView: UIView?
   let marchingLayer = MarchingLayer()
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    marchingLayer.frame = view.frame
-    view.layer.addSublayer(marchingLayer)
-    marchingLayer.animationDirection = .up
+    marchingLayerReferanceView?.layer.addSublayer(marchingLayer)
+    marchingLayer.frame = marchingLayerReferanceView?.frame ?? .zero
+    marchingLayer.animationDirection = .right
     marchingLayer.animationSpeed = 1
-    marchingLayer.preferredSpriteSize = CGSize(width: 30, height: 30)
-    marchingLayer.verticalSpriteSpacing = 5
-    marchingLayer.horizontalSpriteSpacing = 5
-    marchingLayer.preferredSpriteTintColor = .red
-    marchingLayer.sprites = [Int](1...15).flatMap({ UIImage(named: "musicSheetSliced\($0)") })
+    marchingLayer.preferredSpriteSize = CGSize(width: 50, height: 50)
+    marchingLayer.verticalSpriteSpacing = 8
+    marchingLayer.horizontalSpriteSpacing = 8
+    marchingLayer.preferredSpriteTintColor = .darkGray
+    marchingLayer.sprites = [Int](1...15).flatMap({ UIImage(named: "sheet\($0)") })
     marchingLayer.startAnimation()
   }
 }

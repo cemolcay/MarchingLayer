@@ -20,8 +20,23 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K3k-Id-f04">
+                                <rect key="frame" x="-100" y="-30" width="625" height="747"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="K3k-Id-f04" secondAttribute="trailing" constant="-150" id="0KG-fU-xT3"/>
+                            <constraint firstItem="K3k-Id-f04" firstAttribute="top" secondItem="kwd-uS-ab9" secondAttribute="bottom" constant="-50" id="R8R-2I-QOG"/>
+                            <constraint firstItem="K3k-Id-f04" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="-100" id="arr-MU-ybs"/>
+                            <constraint firstItem="yK9-Fc-hom" firstAttribute="top" secondItem="K3k-Id-f04" secondAttribute="bottom" constant="-50" id="mrG-3g-F7X"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="marchingLayerReferanceView" destination="K3k-Id-f04" id="aUa-Wa-ZK2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
