@@ -8,6 +8,27 @@
 
 import UIKit
 
+extension UIImage {
+
+  /// Applies tint color to template rendered images.
+  ///
+  /// - Parameters:
+  ///   - tintColor: Color you want to apply.
+  ///   - size: Optional new size. Leave it nil if you want to use original image size. Defaults nil.
+  /// - Returns: Returns tint colored version of the image.
+  public func tintColoredImage(tintColor: UIColor?) -> UIImage? {
+    guard let tintColor = tintColor else { return self }
+    var tintedImage: UIImage?
+    let image = withRenderingMode(.alwaysTemplate)
+    UIGraphicsBeginImageContextWithOptions(size, false, scale)
+    tintColor.set()
+    image.draw(in: CGRect(origin: .zero, size: size))
+    tintedImage = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    return tintedImage ?? self
+  }
+}
+
 /// `MarchingLayer` animation direction.
 public enum MarchingLayerAnimationDirection {
   /// Animates sprites from bottom of the layer to top of the layer.
@@ -26,18 +47,15 @@ public class MarchingSpriteLayer: CALayer {
   var sprite: UIImage?
   /// Size of the sprite.
   var size: CGSize
-  /// Set tint color of the sprites if you use template images.
-  var tintColor: UIColor?
 
   /// Initilize with a sprite image and optional preferred sprite size.
   ///
   /// - Parameters:
   ///   - sprite: Image reference of sprite.
   ///   - preferredSize: Optional preferred size for sprite. Defaults nil. Leave nil for using original image size.
-  init(sprite: UIImage, preferredSize: CGSize? = nil, tintColor: UIColor? = nil) {
+  init(sprite: UIImage, preferredSize: CGSize? = nil) {
     self.size = preferredSize ?? sprite.size
     self.sprite = sprite
-    self.tintColor = tintColor
     super.init()
     // Setup sprite
     frame = CGRect(origin: .zero, size: self.size)
@@ -87,7 +105,7 @@ public class MarchingLayer: CALayer {
       return nil
     }
     let index = Int(arc4random_uniform(UInt32(sprites.count)))
-    return sprites[index]
+    return sprites[index].tintColoredImage(tintColor: preferredSpriteTintColor)
   }
 
   // MARK: Init
@@ -139,8 +157,7 @@ public class MarchingLayer: CALayer {
       guard let randomImage = randomImage else { continue }
       let randomSprite = MarchingSpriteLayer(
         sprite: randomImage,
-        preferredSize: preferredSpriteSize,
-        tintColor: preferredSpriteTintColor)
+        preferredSize: preferredSpriteSize)
       marchingSprites.append(randomSprite)
       addSublayer(randomSprite)
 
@@ -214,8 +231,7 @@ public class MarchingLayer: CALayer {
       // Spawn new sprite
       let randomSprite = MarchingSpriteLayer(
         sprite: randomImage,
-        preferredSize: preferredSpriteSize,
-        tintColor: preferredSpriteTintColor)
+        preferredSize: preferredSpriteSize)
       marchingSprites.append(randomSprite)
       addSublayer(randomSprite)
 

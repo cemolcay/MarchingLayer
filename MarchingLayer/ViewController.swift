@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     marchingLayer.preferredSpriteSize = CGSize(width: 30, height: 30)
     marchingLayer.verticalSpriteSpacing = 5
     marchingLayer.horizontalSpriteSpacing = 5
+    marchingLayer.preferredSpriteTintColor = .red
     marchingLayer.sprites = [Int](1...15).flatMap({ UIImage(named: "musicSheetSliced\($0)") })
     marchingLayer.startAnimation()
   }
