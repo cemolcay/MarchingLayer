@@ -78,7 +78,7 @@ public class MarchingSpriteLayer: CALayer {
 /// Randomly fills layer with sprites and move them in any direction and speed you want.
 public class MarchingLayer: CALayer {
   /// Marching sprites. Layer randomly pops images from this array.
-  public var sprites = [UIImage]() { didSet{ setupSprites() }}
+  public var sprites = [UIImage]()
   /// Direction of the marching animation.
   public var animationDirection = MarchingLayerAnimationDirection.up
   /// Speed of the marching animation.
@@ -109,41 +109,40 @@ public class MarchingLayer: CALayer {
     return sprites[index].tintColoredImage(tintColor: preferredSpriteTintColor)
   }
 
-  // MARK: Init
-
-  /// Default init function.
-  public override init() {
-    super.init()
-    commonInit()
-  }
-
-  /// Default init function with layer reference.
-  ///
-  /// - Parameter layer: Layer object.
-  public override init(layer: Any) {
-    super.init(layer: layer)
-    commonInit()
-  }
-
-  /// Default init function with coder.
-  ///
-  /// - Parameter aDecoder: NSCoder object.
-  public required init?(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
-    commonInit()
-  }
-
-  /// Default init function after any public init function call.
-  private func commonInit() {
-    setupSprites()
-  }
+  // MARK: Lifecycle
 
   deinit {
     stopAnimation()
     marchingSprites.forEach({ $0.removeFromSuperlayer() })
   }
 
-  // MARK: Sprites
+  // MARK: Drawing
+
+  public override var frame: CGRect {
+    didSet {
+      redraw()
+    }
+  }
+
+  public override func layoutSublayers() {
+    super.layoutSublayers()
+    if marchingSprites.isEmpty {
+      setupSprites()
+    }
+  }
+
+  /// Redraws layer from top.
+  public func redraw() {
+    let animating = isAnimating
+    stopAnimation()
+    marchingSprites.forEach({ $0.removeFromSuperlayer() })
+    marchingSprites = []
+    layoutIfNeeded()
+    if animating {
+      startAnimation()
+    }
+  }
+
 
   /// Pops the initial sprites into empty layer.
   private func setupSprites() {
@@ -240,13 +239,13 @@ public class MarchingLayer: CALayer {
       switch animationDirection {
       case .up:
         randomSprite.position.x = marchingSprites[index].position.x
-        randomSprite.frame.origin.y = -verticalSpriteSpacing
+        randomSprite.frame.origin.y = frame.size.height + verticalSpriteSpacing
       case .down:
         randomSprite.position.x = marchingSprites[index].position.x
         randomSprite.frame.origin.y = verticalSpriteSpacing
       case .left:
         randomSprite.position.y = marchingSprites[index].position.y
-        randomSprite.frame.origin.x = horizontalSpriteSpacing
+        randomSprite.frame.origin.x = frame.size.width + horizontalSpriteSpacing
       case .right:
         randomSprite.position.y = marchingSprites[index].position.y
         randomSprite.frame.origin.x = -horizontalSpriteSpacing
